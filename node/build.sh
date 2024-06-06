@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+cd "$(dirname "$0")" || exit 1
+
 mkdir -p app/proto
 cp -r ./node_modules/@grpc/reflection/build/proto/grpc ./app/proto
 cp -r ./node_modules/grpc-health-check/proto/health ./app/proto
@@ -15,4 +17,4 @@ mkdir -p src/generated
 
 
 ./node_modules/.bin/rollup -c rollup.config.js --silent
-zip -r ../bundle.zip app
+zip -r ../go/bundle.zip app

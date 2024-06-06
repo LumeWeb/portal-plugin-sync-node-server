@@ -17,11 +17,11 @@
             },
             "nodePrivateKey": {
               "type": "bytes",
-              "id": 4
+              "id": 3
             },
             "dataDir": {
               "type": "string",
-              "id": 5
+              "id": 4
             }
           }
         },
