@@ -17,4 +17,6 @@ mkdir -p src/generated
 
 
 ./node_modules/.bin/rollup -c rollup.config.js --silent
+
+bash download_node.sh
 zip -r ../go/bundle.zip app
