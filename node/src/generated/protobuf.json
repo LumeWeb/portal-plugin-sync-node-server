@@ -1,0 +1,240 @@
+{
+  "nested": {
+    "sync": {
+      "options": {
+        "go_package": "./proto"
+      },
+      "nested": {
+        "InitRequest": {
+          "fields": {
+            "bootstrap": {
+              "type": "bool",
+              "id": 1
+            },
+            "logPrivateKey": {
+              "type": "bytes",
+              "id": 2
+            },
+            "nodePrivateKey": {
+              "type": "bytes",
+              "id": 4
+            },
+            "dataDir": {
+              "type": "string",
+              "id": 5
+            }
+          }
+        },
+        "InitResponse": {
+          "fields": {
+            "logKey": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "UpdateRequest": {
+          "fields": {
+            "data": {
+              "type": "FileMeta",
+              "id": 1
+            }
+          }
+        },
+        "UpdateResponse": {
+          "fields": {}
+        },
+        "FileMeta": {
+          "fields": {
+            "hash": {
+              "type": "bytes",
+              "id": 1
+            },
+            "multihash": {
+              "type": "bytes",
+              "id": 2
+            },
+            "proof": {
+              "type": "bytes",
+              "id": 3
+            },
+            "protocol": {
+              "type": "string",
+              "id": 4
+            },
+            "key": {
+              "type": "EncryptionKey",
+              "id": 5
+            },
+            "size": {
+              "type": "uint64",
+              "id": 6
+            },
+            "slabs": {
+              "rule": "repeated",
+              "type": "SlabSlice",
+              "id": 7
+            },
+            "aliases": {
+              "rule": "repeated",
+              "type": "string",
+              "id": 8
+            }
+          }
+        },
+        "EncryptionKey": {
+          "fields": {
+            "entropy": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "SlabSlice": {
+          "fields": {
+            "slab": {
+              "type": "Slab",
+              "id": 1
+            },
+            "offset": {
+              "type": "uint32",
+              "id": 2
+            },
+            "length": {
+              "type": "uint32",
+              "id": 3
+            }
+          }
+        },
+        "Slab": {
+          "fields": {
+            "health": {
+              "type": "double",
+              "id": 1
+            },
+            "key": {
+              "type": "EncryptionKey",
+              "id": 2
+            },
+            "minShards": {
+              "type": "uint32",
+              "id": 3
+            },
+            "shards": {
+              "rule": "repeated",
+              "type": "Sector",
+              "id": 4
+            }
+          }
+        },
+        "Sector": {
+          "fields": {
+            "contractSet": {
+              "keyType": "string",
+              "type": "FileContracts",
+              "id": 1
+            },
+            "latestHost": {
+              "type": "bytes",
+              "id": 2
+            },
+            "root": {
+              "type": "bytes",
+              "id": 3
+            }
+          }
+        },
+        "PublicKey": {
+          "fields": {
+            "key": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "FileContracts": {
+          "fields": {
+            "contracts": {
+              "rule": "repeated",
+              "type": "FileContractID",
+              "id": 1
+            }
+          }
+        },
+        "FileContractID": {
+          "fields": {
+            "id": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "QueryRequest": {
+          "fields": {
+            "keys": {
+              "rule": "repeated",
+              "type": "string",
+              "id": 1
+            }
+          }
+        },
+        "QueryResponse": {
+          "fields": {
+            "data": {
+              "rule": "repeated",
+              "type": "FileMeta",
+              "id": 1
+            }
+          }
+        },
+        "UpdateNodesRequest": {
+          "fields": {
+            "nodes": {
+              "rule": "repeated",
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "UpdateNodesResponse": {
+          "fields": {}
+        },
+        "RemoveNodeRequest": {
+          "fields": {
+            "node": {
+              "type": "bytes",
+              "id": 1
+            }
+          }
+        },
+        "RemoveNodeResponse": {
+          "fields": {}
+        },
+        "Sync": {
+          "methods": {
+            "Init": {
+              "requestType": "InitRequest",
+              "responseType": "InitResponse"
+            },
+            "Update": {
+              "requestType": "UpdateRequest",
+              "responseType": "UpdateResponse"
+            },
+            "Query": {
+              "requestType": "QueryRequest",
+              "responseType": "QueryResponse"
+            },
+            "UpdateNodes": {
+              "requestType": "UpdateNodesRequest",
+              "responseType": "UpdateNodesResponse"
+            },
+            "RemoveNode": {
+              "requestType": "RemoveNodeRequest",
+              "responseType": "RemoveNodeResponse"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "nested": {
+    "plugin": {
+      "options": {
+        "go_package": "./plugin"
+      },
+      "nested": {
+        "GRPCStdio": {
+          "methods": {
+            "StreamStdio": {
+              "requestType": "google.protobuf.Empty",
+              "responseType": "StdioData",
+              "responseStream": true
+            }
+          }
+        },
+        "StdioData": {
+          "fields": {
+            "channel": {
+              "type": "Channel",
+              "id": 1
+            },
+            "data": {
+              "type": "bytes",
+              "id": 2
+            }
+          },
+          "nested": {
+            "Channel": {
+              "values": {
+                "INVALID": 0,
+                "STDOUT": 1,
+                "STDERR": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    "google": {
+      "nested": {
+        "protobuf": {
+          "nested": {
+            "Empty": {
+              "fields": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
