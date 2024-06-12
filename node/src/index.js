@@ -209,6 +209,7 @@ async function main () {
 
                 swarm = new Hyperswarm({ keyPair });
                 swarm.join(bee.discoveryKey);
+                swarm.join(bee.view.discoveryKey);
                 swarm.join(hypercoreCrypto.hash(Buffer.from(SYNC_PROTOCOL)));
 
                 const peerHandler = (conn) => {
