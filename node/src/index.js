@@ -253,7 +253,7 @@ async function main () {
                 process.on("SIGTERM", exit);
                 process.on("exit", exit);
 
-                return { logKey: bee.key };
+                return { logKey: bee.view.key };
             },
             async Update (call) {
                 const req = root.lookupType("sync.UpdateRequest").fromObject(call.request);
