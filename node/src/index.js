@@ -268,10 +268,10 @@ async function main () {
                 const aliases = obj.aliases || [];
                 delete obj.aliases;
 
-                bee.put(obj.hash, obj);
+                await bee.put(obj.hash, obj);
 
                 for (const alias of aliases) {
-                    bee.put(alias, obj.hash);
+                    await bee.put(alias, obj.hash);
                 }
 
                 return {};
