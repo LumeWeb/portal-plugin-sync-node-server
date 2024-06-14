@@ -7,11 +7,7 @@
       "nested": {
         "InitRequest": {
           "fields": {
-            "bootstrap": {
-              "type": "bool",
-              "id": 1
-            },
-            "logPrivateKey": {
+            "logPublicKey": {
               "type": "bytes",
               "id": 2
             },
@@ -26,12 +22,7 @@
           }
         },
         "InitResponse": {
-          "fields": {
-            "logKey": {
-              "type": "bytes",
-              "id": 1
-            }
-          }
+          "fields": {}
         },
         "UpdateRequest": {
           "fields": {

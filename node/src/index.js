@@ -17,6 +17,7 @@ import c from "compact-encoding";
 import b4a from "b4a";
 import { setTraceFunction } from "hypertrace";
 import Autobee from "./autobee.js";
+import { concatBytes } from '@noble/curves/abstract/utils'
 let swarm;
 let store;
 let bee;
@@ -155,26 +156,18 @@ async function main () {
         prepareServiceImpl({
             async Init (call) {
                 const request = call.request;
-                const bootstrap = request.bootstrap;
-                const logPrivateKey = request.logPrivateKey;
-                const nodePrivateKey = request.nodePrivateKey;
-                const pubKey = ed25519.getPublicKey(nodePrivateKey.slice(0, 32));
-                const keyPair = { publicKey: pubKey, secretKey: nodePrivateKey };
+                const privateKey = request.nodePrivateKey;
+                const logPublicKey = request.logPublicKey;
+
+                const pubKey = ed25519.getPublicKey(privateKey.slice(0, 32))
+                const keyPair = { publicKey: pubKey, secretKey: concatBytes(privateKey, pubKey) }
 
                 dataDir = request.dataDir;
 
                 store = new Corestore(dataDir);
-                const logPublicKey = ed25519.getPublicKey(logPrivateKey.slice(0, 32));
-
-                if (bootstrap) {
-                    const bootstrapCore = store.get({ keyPair: { publicKey: logPublicKey, secretKey: logPrivateKey } });
-                    await bootstrapCore.ready();
-                    await bootstrapCore.setUserData('autobase/local', bootstrapCore.key);
-
-                    await store.get({ keyPair }).ready();
-                }
 
                 bee = new Autobee(store, logPublicKey, {
+                    keyPair,
                     apply: async (batch, view, base) => {
                         // Add .addWriter functionality
                         for (const node of batch) {
@@ -182,9 +175,6 @@ async function main () {
                             if (op.type === 'addWriter') {
                                 const key = b4a.from(op.key, "hex");
                                 await base.addWriter(key);
-                                if (op.bootstrap) {
-                                    await base.system.add(key, { isIndexer: true, isPending: false });
-                                }
                             }
 
                             if (op.type === 'removeWriter') {
@@ -202,9 +192,6 @@ async function main () {
                     // Print any errors from apply() etc
                     .on('error', console.error)
 
-                if (bootstrap) {
-                    await bee.addNode(b4a.from(pubKey).toString("hex"), true);
-                }
                 await bee.update();
 
                 swarm = new Hyperswarm({ keyPair });
