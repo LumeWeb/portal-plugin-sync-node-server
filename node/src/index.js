@@ -17,7 +17,6 @@ import c from "compact-encoding";
 import b4a from "b4a";
 import { setTraceFunction } from "hypertrace";
 import Autobee from "./autobee.js";
-import { concatBytes } from '@noble/curves/abstract/utils'
 let swarm;
 let store;
 let bee;
