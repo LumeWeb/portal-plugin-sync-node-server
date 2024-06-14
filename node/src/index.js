@@ -160,7 +160,7 @@ async function main () {
                 const logPublicKey = request.logPublicKey;
 
                 const pubKey = ed25519.getPublicKey(privateKey.slice(0, 32))
-                const keyPair = { publicKey: pubKey, secretKey: concatBytes(privateKey, pubKey) }
+                const keyPair = { publicKey: pubKey, secretKey: privateKey }
 
                 dataDir = request.dataDir;
 
