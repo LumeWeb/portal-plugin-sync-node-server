@@ -205,11 +205,15 @@ async function main () {
 
                     const sendKey = sync.addMessage({
                         encoding: c.raw,
-                        onmessage (m) {
+                           async onmessage (m) {
                             if (m.length === 32) {
                                 const dKey = toHex(m);
                                 if (!DISCOVERED_BEES.has(dKey)) {
-                                    DISCOVERED_BEES.set(dKey, new Hyperbee(store.get({ key: m }), { ...encoding }));
+                                    const bee = new Hyperbee(store.get({ key: m }), { ...encoding });
+                                    await bee.ready();
+                                    swarm.join(bee.discoveryKey);
+                                    await swarm.flush();
+                                    DISCOVERED_BEES.set(dKey, bee);
                                 }
                             }
                         },
@@ -296,8 +300,6 @@ async function main () {
 
                     // Search the discovered Hyperbees
                     for (const bee of DISCOVERED_BEES.values()) {
-                        await bee.ready();
-
                         const remoteValue = await resolveAlias(bee, key);
                         if (remoteValue) {
                             foundEntries.push(remoteValue);
