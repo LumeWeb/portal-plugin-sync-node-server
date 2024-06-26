@@ -216,7 +216,7 @@ async function main () {
                     });
 
                     sync.open();
-                    sendKey.send(bee.key);
+                    sendKey.send(bee.view.key);
                 };
 
                 swarm.on("connection", conn => bee.replicate(conn));
